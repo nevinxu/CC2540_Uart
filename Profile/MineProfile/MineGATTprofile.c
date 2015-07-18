@@ -51,7 +51,7 @@
 #include "gattservapp.h"
 #include "gapbondmgr.h"
 
-#include "simpleGATTprofile.h"
+#include "MineGATTprofile.h"
 
 /*********************************************************************
  * MACROS
@@ -118,7 +118,7 @@ CONST uint8 simpleProfilechar5UUID[ATT_BT_UUID_SIZE] =
  * LOCAL VARIABLES
  */
 
-static simpleProfileCBs_t *simpleProfile_AppCBs = NULL;
+static MineProfileCBs_t *MineProfile_AppCBs = NULL;
 
 /*********************************************************************
  * Profile Attributes - variables
@@ -403,11 +403,11 @@ bStatus_t SimpleProfile_AddService( uint32 services )
  *
  * @return  SUCCESS or bleAlreadyInRequestedMode
  */
-bStatus_t SimpleProfile_RegisterAppCBs( simpleProfileCBs_t *appCallbacks )
+bStatus_t SimpleProfile_RegisterAppCBs( MineProfileCBs_t *appCallbacks )
 {
   if ( appCallbacks )
   {
-    simpleProfile_AppCBs = appCallbacks;
+    MineProfile_AppCBs = appCallbacks;
     
     return ( SUCCESS );
   }
@@ -714,9 +714,9 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
   }
 
   // If a charactersitic value changed then callback function to notify application of change
-  if ( (notifyApp != 0xFF ) && simpleProfile_AppCBs && simpleProfile_AppCBs->pfnSimpleProfileChange )
+  if ( (notifyApp != 0xFF ) && MineProfile_AppCBs && MineProfile_AppCBs->pfnMineProfileChange )
   {
-    simpleProfile_AppCBs->pfnSimpleProfileChange( notifyApp );  
+    MineProfile_AppCBs->pfnMineProfileChange( notifyApp );  
   }
   
   return ( status );

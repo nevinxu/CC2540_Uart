@@ -10,23 +10,11 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>5</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
-        <option>
-          <name>DerivativeDescriptionFile</name>
-          <state>$TOOLKIT_DIR$\config\devices\Texas Instruments\CC2540F256.i51</state>
-        </option>
-        <option>
-          <name>Previous Derivative File</name>
-          <state>$TOOLKIT_DIR$\config\devices\Texas Instruments\CC2540F256.i51</state>
-        </option>
-        <option>
-          <name>Showed Derivative</name>
-          <state>CC2540F256</state>
-        </option>
         <option>
           <name>CPU Core</name>
           <version>1</version>
@@ -250,13 +238,53 @@
           <version>0</version>
           <state>3</state>
         </option>
+        <option>
+          <name>Extended stack address</name>
+          <state>0x9B</state>
+        </option>
+        <option>
+          <name>Extended stack mask</name>
+          <state>0x03</state>
+        </option>
+        <option>
+          <name>Extended stack is offset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGChipSelectMenu</name>
+          <state>CC2540F256	CC2540F256</state>
+        </option>
+        <option>
+          <name>OGChipSelectMenuSlave</name>
+          <state>CC2540F256	CC2540F256</state>
+        </option>
+        <option>
+          <name>DPC Address</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AutoModificationType</name>
+          <state></state>
+        </option>
+        <option>
+          <name>UseHWMulDivUnit</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
+          <state></state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICC8051</name>
-      <archiveVersion>5</archiveVersion>
+      <archiveVersion>6</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -272,7 +300,6 @@
           <state>HAL_DMA=TRUE</state>
           <state>xPOWER_SAVING</state>
           <state>xPLUS_BROADCASTER</state>
-          <state>HAL_LCD=TRUE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -456,9 +483,7 @@
           <state>$PROJ_DIR$\OSAL\Include</state>
           <state>$PROJ_DIR$\Profile\Devinfo</state>
           <state>$PROJ_DIR$\Profile\Roles</state>
-          <state>$PROJ_DIR$\Profile\SimpleProfile</state>
-          <state>$PROJ_DIR$\Profile\Keys\CC254x</state>
-          <state>$PROJ_DIR$\Profile\Keys</state>
+          <state>$PROJ_DIR$\Profile\MineProfile</state>
           <state>$PROJ_DIR\BLEStack\Source</state>
         </option>
         <option>
@@ -531,6 +556,10 @@
         <option>
           <name>NoSizeConstraints</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>UseHWMulDivUnit</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -694,6 +723,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -711,9 +741,9 @@
     </settings>
     <settings>
       <name>XLINK</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
-        <version>18</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1033,6 +1063,30 @@
           <version>0</version>
           <state>0</state>
         </option>
+        <option>
+          <name>XLink DPC Address</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1061,6 +1115,11 @@
       </data>
     </settings>
     <settings>
+      <name>HWMUL</name>
+      <archiveVersion>0</archiveVersion>
+      <data/>
+    </settings>
+    <settings>
       <name>BILINK</name>
       <archiveVersion>0</archiveVersion>
       <data/>
@@ -1074,23 +1133,11 @@
     <debug>0</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>5</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
-        <option>
-          <name>DerivativeDescriptionFile</name>
-          <state>$TOOLKIT_DIR$\config\devices\</state>
-        </option>
-        <option>
-          <name>Previous Derivative File</name>
-          <state>No device selected</state>
-        </option>
-        <option>
-          <name>Showed Derivative</name>
-          <state>No device selected</state>
-        </option>
         <option>
           <name>CPU Core</name>
           <version>1</version>
@@ -1210,7 +1257,7 @@
         </option>
         <option>
           <name>RTConfigPath</name>
-          <state>xxx.h</state>
+          <state></state>
         </option>
         <option>
           <name>RTLibraryPath</name>
@@ -1312,20 +1359,60 @@
         <option>
           <name>GRuntimeLibSelectSlave2</name>
           <version>0</version>
-          <state>1</state>
+          <state>3</state>
+        </option>
+        <option>
+          <name>Extended stack address</name>
+          <state>0x9B</state>
+        </option>
+        <option>
+          <name>Extended stack mask</name>
+          <state>0x03</state>
+        </option>
+        <option>
+          <name>Extended stack is offset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGChipSelectMenu</name>
+          <state>8052	Generic 8052</state>
+        </option>
+        <option>
+          <name>OGChipSelectMenuSlave</name>
+          <state>8052	Generic 8052</state>
+        </option>
+        <option>
+          <name>DPC Address</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AutoModificationType</name>
+          <state></state>
+        </option>
+        <option>
+          <name>UseHWMulDivUnit</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
+          <state></state>
         </option>
       </data>
     </settings>
     <settings>
       <name>ICC8051</name>
-      <archiveVersion>5</archiveVersion>
+      <archiveVersion>6</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.r51</state>
         </option>
         <option>
           <name>CCDefines</name>
@@ -1537,7 +1624,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules04</name>
@@ -1575,6 +1662,10 @@
         <option>
           <name>NoSizeConstraints</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>UseHWMulDivUnit</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1738,6 +1829,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -1755,9 +1847,9 @@
     </settings>
     <settings>
       <name>XLINK</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
-        <version>18</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1766,7 +1858,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>CC2540_UART.a51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -2077,6 +2169,30 @@
           <version>0</version>
           <state>0</state>
         </option>
+        <option>
+          <name>XLink DPC Address</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2105,381 +2221,371 @@
       </data>
     </settings>
     <settings>
+      <name>HWMUL</name>
+      <archiveVersion>0</archiveVersion>
+      <data/>
+    </settings>
+    <settings>
       <name>BILINK</name>
       <archiveVersion>0</archiveVersion>
       <data/>
     </settings>
   </configuration>
   <group>
-    <name>CC2540</name>
+    <name>APP</name>
     <group>
-      <name>APP</name>
-      <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$\APP\Include\OnBoard.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\APP\Include\simpleBLEPeripheral.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\APP\Source\OnBoard.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\APP\Source\OSAL_SimpleBLEPeripheral.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\APP\Source\simpleBLEPeripheral.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\APP\Source\SimpleBLEPeripheral_Main.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>BLEStack</name>
-      <group>
-        <name>Include</name>
-        <group>
-          <name>Controller</name>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\hci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_event.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_tl.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\ll.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_math.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_sleep.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_timer2.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\phy.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Controller\phy_image.h</name>
-          </file>
-        </group>
-        <group>
-          <name>Host</name>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\att.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\bcomdef.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\gap.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\gapgattserver.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\gatt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\gatt_uuid.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\gattservapp.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\l2cap.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\linkdb.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\BLEStack\Include\Host\sm.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>Libraries</name>
-        <file>
-          <name>$PROJ_DIR$\BLEStack\Libraries\CC2540DB\CC2540_BLE_peri.lib</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\BLEStack\Libraries\Common\CC254x_BLE_HCI_TL_None.lib</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-      </group>
-    </group>
-    <group>
-      <name>HAL</name>
-      <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_adc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_assert.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_board.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_drivers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_flash.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_key.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_lcd.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_led.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_rpc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_sleep.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_timer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Include\hal_uart.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\HAL\Source\hal_assert.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\HAL\Source\hal_drivers.c</name>
-        </file>
-      </group>
-      <group>
-        <name>Target</name>
-        <group>
-          <name>CC2540EB</name>
-          <group>
-            <name>Include</name>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_aes.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_board_cfg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_ccm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_crc.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_dma.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_mcu.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_types.h</name>
-            </file>
-          </group>
-          <group>
-            <name>Source</name>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_adc.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_aes.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_crc.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_dma.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_flash.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_key.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_lcd.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_led.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_sleep.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_startup.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_timer.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_uart.c</name>
-            </file>
-          </group>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>NPI</name>
-      <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$\NPI\Include\npi.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\NPI\Source\npi.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>OSAL</name>
-      <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\osal_bufmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\osal_cbtimer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_Clock.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_Memory.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_Nv.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_PwrMgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\osal_snv.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_Tasks.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\OSAL_Timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Include\ZComDef.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\OSAL.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\osal_bufmgr.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\osal_cbtimer.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\OSAL_ClockBLE.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\OSAL_Memory.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\OSAL_PwrMgr.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\osal_snv.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\OSAL\Source\OSAL_Timers.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>ProConfig</name>
+      <name>Include</name>
       <file>
-        <name>$PROJ_DIR$\Project\config\buildComponents.cfg</name>
+        <name>$PROJ_DIR$\APP\Include\BLEPeripheral.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Project\config\buildConfig.cfg</name>
+        <name>$PROJ_DIR$\APP\Include\OnBoard.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\APP\Include\serialInterface.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\APP\Source\BLEPeripheral.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\APP\Source\BLEPeripheral_Main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\APP\Source\OnBoard.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\APP\Source\OSAL_BLEPeripheral.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\APP\Source\serialInterface.c</name>
+    </file>
+  </group>
+  <group>
+    <name>BLEStack</name>
+    <group>
+      <name>Include</name>
+      <group>
+        <name>Controller</name>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\hci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_data.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_event.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\hci_tl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\ll.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_math.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_sleep.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\ll_timer2.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\phy.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Controller\phy_image.h</name>
+        </file>
+      </group>
+      <group>
+        <name>Host</name>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\att.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\bcomdef.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\gap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\gapgattserver.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\gatt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\gatt_uuid.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\gattservapp.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\l2cap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\linkdb.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\BLEStack\Include\Host\sm.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>Libraries</name>
+      <file>
+        <name>$PROJ_DIR$\BLEStack\Libraries\CC2540DB\CC2540_BLE.lib</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\BLEStack\Libraries\CC2540DB\CC2540_BLE_peri.lib</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\BLEStack\Libraries\Common\CC254x_BLE_HCI_TL_None.lib</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>HAL</name>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_adc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_assert.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_defs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_drivers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_flash.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_led.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_rpc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_sleep.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_timer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Include\hal_uart.h</name>
       </file>
     </group>
     <group>
-      <name>Profiles</name>
+      <name>Source</name>
+      <file>
+        <name>$PROJ_DIR$\HAL\Source\hal_assert.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\HAL\Source\hal_drivers.c</name>
+      </file>
+    </group>
+    <group>
+      <name>Target</name>
       <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$\Profile\DevInfo\devinfoservice.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\gapbondmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\CC254x\peripheral.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\SimpleProfile\simpleGATTprofile.h</name>
-        </file>
+        <name>CC2540EB</name>
+        <group>
+          <name>Include</name>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_aes.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_board_cfg.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_ccm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_crc.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_dma.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_mcu.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Include\hal_types.h</name>
+          </file>
+        </group>
+        <group>
+          <name>Source</name>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_adc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_aes.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_crc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_dma.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_flash.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_led.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_sleep.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_startup.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_timer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\HAL\Target\CC2540EB\Source\hal_uart.c</name>
+          </file>
+        </group>
       </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\Profile\DevInfo\devinfoservice.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\gap.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\gapbondmgr.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\gatt_uuid.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\GATT\gattservapp_util.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Roles\peripheral.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\SimpleProfile\simpleGATTprofile.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\Profile\Keys\CC254x\simplekeys.c</name>
-        </file>
-      </group>
+    </group>
+  </group>
+  <group>
+    <name>NPI</name>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$\NPI\Include\npi.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\NPI\Source\npi.c</name>
+    </file>
+  </group>
+  <group>
+    <name>OSAL</name>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\osal_bufmgr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\osal_cbtimer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_Clock.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_Memory.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_Nv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_PwrMgr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\osal_snv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_Tasks.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\OSAL_Timers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Include\ZComDef.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Source</name>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\OSAL.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\osal_bufmgr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\osal_cbtimer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\OSAL_ClockBLE.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\OSAL_Memory.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\OSAL_PwrMgr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\osal_snv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\OSAL\Source\OSAL_Timers.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>ProConfig</name>
+    <file>
+      <name>$PROJ_DIR$\Project\config\buildComponents.cfg</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Project\config\buildConfig.cfg</name>
+    </file>
+  </group>
+  <group>
+    <name>Profiles</name>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$\Profile\DevInfo\devinfoservice.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\gapbondmgr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\MineProfile\MineGATTprofile.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\CC254x\peripheral.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Source</name>
+      <file>
+        <name>$PROJ_DIR$\Profile\DevInfo\devinfoservice.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\gap.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\gapbondmgr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\gatt_uuid.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\GATT\gattservapp_util.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\MineProfile\MineGATTprofile.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Profile\Roles\peripheral.c</name>
+      </file>
     </group>
   </group>
 </project>

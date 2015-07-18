@@ -1,46 +1,3 @@
-/**************************************************************************************************
-  Filename:       simpleBLEPeripheral.c
-  Revised:        $Date: 2010-08-06 08:56:11 -0700 (Fri, 06 Aug 2010) $
-  Revision:       $Revision: 23333 $
-
-  Description:    This file contains the Simple BLE Peripheral sample application
-                  for use with the CC2540 Bluetooth Low Energy Protocol Stack.
-
-  Copyright 2010 - 2014 Texas Instruments Incorporated. All rights reserved.
-
-  IMPORTANT: Your use of this Software is limited to those specific rights
-  granted under the terms of a software license agreement between the user
-  who downloaded the software, his/her employer (which must be your employer)
-  and Texas Instruments Incorporated (the "License").  You may not use this
-  Software unless you agree to abide by the terms of the License. The License
-  limits your use, and you acknowledge, that the Software may not be modified,
-  copied or distributed unless embedded on a Texas Instruments microcontroller
-  or used solely and exclusively in conjunction with a Texas Instruments radio
-  frequency transceiver, which is integrated into your product.  Other than for
-  the foregoing purpose, you may not use, reproduce, copy, prepare derivative
-  works of, modify, distribute, perform, display or sell this Software and/or
-  its documentation for any purpose.
-
-  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
-  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
-  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
-  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
-  NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR OTHER
-  LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-  INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE
-  OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT
-  OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-  (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-
-  Should you have any questions regarding your right to use this Software,
-  contact Texas Instruments Incorporated at www.TI.com.
-**************************************************************************************************/
-
-/*********************************************************************
- * INCLUDES
- */
-
 #include "bcomdef.h"
 #include "OSAL.h"
 #include "OSAL_PwrMgr.h"
@@ -48,8 +5,6 @@
 #include "OnBoard.h"
 #include "hal_adc.h"
 #include "hal_led.h"
-#include "hal_key.h"
-#include "hal_lcd.h"
 
 #include "gatt.h"
 
@@ -58,17 +13,13 @@
 #include "gapgattserver.h"
 #include "gattservapp.h"
 #include "devinfoservice.h"
-#include "simpleGATTprofile.h"
-
-#if defined( CC2540_MINIDK )
-  #include "simplekeys.h"
-#endif
+#include "MineGATTprofile.h"
 
 #include "peripheral.h"
 
 #include "gapbondmgr.h"
 
-#include "simpleBLEPeripheral.h"
+#include "BLEPeripheral.h"
 
 #if defined FEATURE_OAD
   #include "oad.h"
@@ -143,7 +94,7 @@
 /*********************************************************************
  * LOCAL VARIABLES
  */
-static uint8 simpleBLEPeripheral_TaskID;   // Task ID for internal task/event processing
+static uint8 BLEPeripheral_TaskID;   // Task ID for internal task/event processing
 
 static gaprole_States_t gapProfileState = GAPROLE_INIT;
 
@@ -213,20 +164,11 @@ static uint8 attDeviceName[GAP_DEVICE_NAME_LEN] = "Simple BLE Peripheral";
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
-static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg );
-static void simpleBLEPeripheral_ProcessGATTMsg( gattMsgEvent_t *pMsg );
+static void BLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg );
+static void BLEPeripheral_ProcessGATTMsg( gattMsgEvent_t *pMsg );
 static void peripheralStateNotificationCB( gaprole_States_t newState );
 static void performPeriodicTask( void );
-static void simpleProfileChangeCB( uint8 paramID );
-
-#if defined( CC2540_MINIDK )
-static void simpleBLEPeripheral_HandleKeys( uint8 shift, uint8 keys );
-#endif
-
-#if (defined HAL_LCD) && (HAL_LCD == TRUE)
-static char *bdAddr2Str ( uint8 *pAddr );
-#endif // (defined HAL_LCD) && (HAL_LCD == TRUE)
-
+static void MineProfileChangeCB( uint8 paramID );
 
 
 /*********************************************************************
@@ -234,23 +176,23 @@ static char *bdAddr2Str ( uint8 *pAddr );
  */
 
 // GAP Role Callbacks
-static gapRolesCBs_t simpleBLEPeripheral_PeripheralCBs =
+static gapRolesCBs_t BLEPeripheral_PeripheralCBs =
 {
   peripheralStateNotificationCB,  // Profile State Change Callbacks
   NULL                            // When a valid RSSI is read from controller (not used by application)
 };
 
 // GAP Bond Manager Callbacks
-static gapBondCBs_t simpleBLEPeripheral_BondMgrCBs =
+static gapBondCBs_t BLEPeripheral_BondMgrCBs =
 {
   NULL,                     // Passcode callback (not used by application)
   NULL                      // Pairing / Bonding state Callback (not used by application)
 };
 
 // Simple GATT Profile Callbacks
-static simpleProfileCBs_t simpleBLEPeripheral_SimpleProfileCBs =
+static MineProfileCBs_t BLEPeripheral_MineProfileCBs =
 {
-  simpleProfileChangeCB    // Charactersitic value change callback
+  MineProfileChangeCB    // Charactersitic value change callback
 };
 /*********************************************************************
  * PUBLIC FUNCTIONS
@@ -270,22 +212,17 @@ static simpleProfileCBs_t simpleBLEPeripheral_SimpleProfileCBs =
  *
  * @return  none
  */
-void SimpleBLEPeripheral_Init( uint8 task_id )
+void BLEPeripheral_Init( uint8 task_id )
 {
-  simpleBLEPeripheral_TaskID = task_id;
+  BLEPeripheral_TaskID = task_id;
 
   // Setup the GAP
   VOID GAP_SetParamValue( TGAP_CONN_PAUSE_PERIPHERAL, DEFAULT_CONN_PAUSE_PERIPHERAL );
   
   // Setup the GAP Peripheral Role Profile
   {
-    #if defined( CC2540_MINIDK )
-      // For the CC2540DK-MINI keyfob, device doesn't start advertising until button is pressed
-      uint8 initial_advertising_enable = FALSE;
-    #else
       // For other hardware platforms, device starts advertising upon initialization
-      uint8 initial_advertising_enable = TRUE;
-    #endif
+    uint8 initial_advertising_enable = TRUE;
 
     // By setting this to zero, the device will go into the waiting state after
     // being discoverable for 30.72 second, and will not being advertising again
@@ -365,11 +302,6 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 
 #if defined( CC2540_MINIDK )
 
-  SK_AddService( GATT_ALL_SERVICES ); // Simple Keys Profile
-
-  // Register for all key events - This app will handle all key events
-  RegisterForKeys( simpleBLEPeripheral_TaskID );
-
   // makes sure LEDs are off
   HalLedSet( (HAL_LED_1 | HAL_LED_2), HAL_LED_MODE_OFF );
 
@@ -392,22 +324,8 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 
 #endif // #if defined( CC2540_MINIDK )
 
-#if (defined HAL_LCD) && (HAL_LCD == TRUE)
-
-#if defined FEATURE_OAD
-  #if defined (HAL_IMAGE_A)
-    HalLcdWriteStringValue( "BLE Peri-A", OAD_VER_NUM( _imgHdr.ver ), 16, HAL_LCD_LINE_1 );
-  #else
-    HalLcdWriteStringValue( "BLE Peri-B", OAD_VER_NUM( _imgHdr.ver ), 16, HAL_LCD_LINE_1 );
-  #endif // HAL_IMAGE_A
-#else
-  HalLcdWriteString( "BLE Peripheral", HAL_LCD_LINE_1 );
-#endif // FEATURE_OAD
-
-#endif // (defined HAL_LCD) && (HAL_LCD == TRUE)
-
   // Register callback with SimpleGATTprofile
-  VOID SimpleProfile_RegisterAppCBs( &simpleBLEPeripheral_SimpleProfileCBs );
+  VOID SimpleProfile_RegisterAppCBs( &BLEPeripheral_MineProfileCBs );
 
   // Enable clock divide on halt
   // This reduces active current while radio is active and CC254x MCU
@@ -415,14 +333,12 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   HCI_EXT_ClkDivOnHaltCmd( HCI_EXT_ENABLE_CLK_DIVIDE_ON_HALT );
 
 #if defined ( DC_DC_P0_7 )
-
   // Enable stack to toggle bypass control on TPS62730 (DC/DC converter)
   HCI_EXT_MapPmIoPortCmd( HCI_EXT_PM_IO_PORT_P0, HCI_EXT_PM_IO_PORT_PIN7 );
-
 #endif // defined ( DC_DC_P0_7 )
 
   // Setup a delayed profile startup
-  osal_set_event( simpleBLEPeripheral_TaskID, SBP_START_DEVICE_EVT );
+  osal_set_event( BLEPeripheral_TaskID, SBP_START_DEVICE_EVT );
 
 }
 
@@ -439,7 +355,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
  *
  * @return  events not processed
  */
-uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
+uint16 BLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
 {
 
   VOID task_id; // OSAL required parameter that isn't used in this function
@@ -448,9 +364,9 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
   {
     uint8 *pMsg;
 
-    if ( (pMsg = osal_msg_receive( simpleBLEPeripheral_TaskID )) != NULL )
+    if ( (pMsg = osal_msg_receive( BLEPeripheral_TaskID )) != NULL )
     {
-      simpleBLEPeripheral_ProcessOSALMsg( (osal_event_hdr_t *)pMsg );
+      BLEPeripheral_ProcessOSALMsg( (osal_event_hdr_t *)pMsg );
 
       // Release the OSAL message
       VOID osal_msg_deallocate( pMsg );
@@ -463,13 +379,13 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
   if ( events & SBP_START_DEVICE_EVT )
   {
     // Start the Device
-    VOID GAPRole_StartDevice( &simpleBLEPeripheral_PeripheralCBs );
+    VOID GAPRole_StartDevice( &BLEPeripheral_PeripheralCBs );
 
     // Start Bond Manager
-    VOID GAPBondMgr_Register( &simpleBLEPeripheral_BondMgrCBs );
+    VOID GAPBondMgr_Register( &BLEPeripheral_BondMgrCBs );
 
     // Set timer for first periodic event
-    osal_start_timerEx( simpleBLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
+    osal_start_timerEx( BLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
 
     return ( events ^ SBP_START_DEVICE_EVT );
   }
@@ -479,7 +395,7 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
     // Restart timer
     if ( SBP_PERIODIC_EVT_PERIOD )
     {
-      osal_start_timerEx( simpleBLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
+      osal_start_timerEx( BLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
     }
 
     // Perform periodic application task
@@ -501,20 +417,18 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
  *
  * @return  none
  */
-static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
+static void BLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
 {
   switch ( pMsg->event )
   {     
   #if defined( CC2540_MINIDK )
     case KEY_CHANGE:
-      simpleBLEPeripheral_HandleKeys( ((keyChange_t *)pMsg)->state, 
-                                      ((keyChange_t *)pMsg)->keys );
-      break;
+    ;
   #endif // #if defined( CC2540_MINIDK )
  
     case GATT_MSG_EVENT:
       // Process GATT message
-      simpleBLEPeripheral_ProcessGATTMsg( (gattMsgEvent_t *)pMsg );
+      BLEPeripheral_ProcessGATTMsg( (gattMsgEvent_t *)pMsg );
       break;
       
     default:
@@ -523,71 +437,6 @@ static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
   }
 }
 
-#if defined( CC2540_MINIDK )
-/*********************************************************************
- * @fn      simpleBLEPeripheral_HandleKeys
- *
- * @brief   Handles all key events for this device.
- *
- * @param   shift - true if in shift/alt.
- * @param   keys - bit field for key events. Valid entries:
- *                 HAL_KEY_SW_2
- *                 HAL_KEY_SW_1
- *
- * @return  none
- */
-static void simpleBLEPeripheral_HandleKeys( uint8 shift, uint8 keys )
-{
-  uint8 SK_Keys = 0;
-
-  VOID shift;  // Intentionally unreferenced parameter
-
-  if ( keys & HAL_KEY_SW_1 )
-  {
-    SK_Keys |= SK_KEY_LEFT;
-  }
-
-  if ( keys & HAL_KEY_SW_2 )
-  {
-
-    SK_Keys |= SK_KEY_RIGHT;
-
-    // if device is not in a connection, pressing the right key should toggle
-    // advertising on and off
-    // Note:  If PLUS_BROADCASTER is define this condition is ignored and
-    //        Device may advertise during connections as well. 
-#ifndef PLUS_BROADCASTER  
-    if( gapProfileState != GAPROLE_CONNECTED )
-    {
-#endif // PLUS_BROADCASTER
-      uint8 current_adv_enabled_status;
-      uint8 new_adv_enabled_status;
-
-      //Find the current GAP advertisement status
-      GAPRole_GetParameter( GAPROLE_ADVERT_ENABLED, &current_adv_enabled_status );
-
-      if( current_adv_enabled_status == FALSE )
-      {
-        new_adv_enabled_status = TRUE;
-      }
-      else
-      {
-        new_adv_enabled_status = FALSE;
-      }
-
-      //change the GAP advertisement status to opposite of current status
-      GAPRole_SetParameter( GAPROLE_ADVERT_ENABLED, sizeof( uint8 ), &new_adv_enabled_status );
-#ifndef PLUS_BROADCASTER
-    }
-#endif // PLUS_BROADCASTER
-  }
-
-  // Set the value of the keys state to the Simple Keys Profile;
-  // This will send out a notification of the keys state if enabled
-  SK_SetParameter( SK_KEY_ATTR, sizeof ( uint8 ), &SK_Keys );
-}
-#endif // #if defined( CC2540_MINIDK )
-
 /*********************************************************************
  * @fn      simpleBLEPeripheral_ProcessGATTMsg
  *
@@ -595,7 +444,7 @@ static void simpleBLEPeripheral_HandleKeys( uint8 shift, uint8 keys )
  *
  * @return  none
  */
-static void simpleBLEPeripheral_ProcessGATTMsg( gattMsgEvent_t *pMsg )
+static void BLEPeripheral_ProcessGATTMsg( gattMsgEvent_t *pMsg )
 {  
   GATT_bm_free( &pMsg->msg, pMsg->method );
 }
@@ -815,7 +664,7 @@ static void performPeriodicTask( void )
  *
  * @return  none
  */
-static void simpleProfileChangeCB( uint8 paramID )
+static void MineProfileChangeCB( uint8 paramID )
 {
   uint8 newValue;
 
@@ -844,40 +693,3 @@ static void simpleProfileChangeCB( uint8 paramID )
       break;
   }
 }
-
-#if (defined HAL_LCD) && (HAL_LCD == TRUE)
-/*********************************************************************
- * @fn      bdAddr2Str
- *
- * @brief   Convert Bluetooth address to string. Only needed when
- *          LCD display is used.
- *
- * @return  none
- */
-char *bdAddr2Str( uint8 *pAddr )
-{
-  uint8       i;
-  char        hex[] = "0123456789ABCDEF";
-  static char str[B_ADDR_STR_LEN];
-  char        *pStr = str;
-
-  *pStr++ = '0';
-  *pStr++ = 'x';
-
-  // Start from end of addr
-  pAddr += B_ADDR_LEN;
-
-  for ( i = B_ADDR_LEN; i > 0; i-- )
-  {
-    *pStr++ = hex[*--pAddr >> 4];
-    *pStr++ = hex[*pAddr & 0x0F];
-  }
-
-  *pStr = 0;
-
-  return str;
-}
-#endif // (defined HAL_LCD) && (HAL_LCD == TRUE)
-
-/*********************************************************************
-*********************************************************************/

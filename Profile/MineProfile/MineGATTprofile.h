@@ -90,12 +90,12 @@ extern "C"
  */
 
 // Callback when a characteristic value has changed
-typedef void (*simpleProfileChange_t)( uint8 paramID );
+typedef void (*MineProfileChange_t)( uint8 paramID );
 
 typedef struct
 {
-  simpleProfileChange_t        pfnSimpleProfileChange;  // Called when characteristic value changes
-} simpleProfileCBs_t;
+  MineProfileChange_t        pfnMineProfileChange;  // Called when characteristic value changes
+} MineProfileCBs_t;
 
     
 
@@ -120,7 +120,7 @@ extern bStatus_t SimpleProfile_AddService( uint32 services );
  *
  *    appCallbacks - pointer to application callbacks.
  */
-extern bStatus_t SimpleProfile_RegisterAppCBs( simpleProfileCBs_t *appCallbacks );
+extern bStatus_t SimpleProfile_RegisterAppCBs( MineProfileCBs_t *appCallbacks );
 
 /*
  * SimpleProfile_SetParameter - Set a Simple GATT Profile parameter.

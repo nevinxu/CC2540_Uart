@@ -138,13 +138,6 @@ extern "C"
   #error Unknown Board Indentifier
 #endif
 
-/* Joystick Center Press */
-#define PUSH2_BV                       BV(0)
-#define PUSH2_SBIT                     P2_0
-#define PUSH2_POLARITY                 ACTIVE_HIGH
-
-/* OSAL NV implemented by internal flash pages. */
-
 // Flash is partitioned into 8 banks of 32 KB or 16 pages.
 #define HAL_FLASH_PAGE_PER_BANK        16
 
@@ -258,14 +251,6 @@ extern "C"
 
 /* Debounce */
 #define HAL_DEBOUNCE(expr)    { int i; for (i=0; i<500; i++) { if (!(expr)) i = 0; } }
-
-/* ----------- Push Buttons ---------- */
-#define HAL_PUSH_BUTTON1()        (PUSH1_POLARITY (PUSH1_SBIT))
-#define HAL_PUSH_BUTTON2()        (PUSH2_POLARITY (PUSH2_SBIT))
-#define HAL_PUSH_BUTTON3()        (0)
-#define HAL_PUSH_BUTTON4()        (0)
-#define HAL_PUSH_BUTTON5()        (0)
-#define HAL_PUSH_BUTTON6()        (0)
 
 /* LED's */
 
@@ -387,11 +372,6 @@ st( \
 #define HAL_AES_DMA TRUE
 #endif
 
-/* Set to TRUE enable LCD usage, FALSE disable it */
-#ifndef HAL_LCD
-#define HAL_LCD TRUE
-#endif
-
 /* Set to TRUE enable LED usage, FALSE disable it */
 #ifndef HAL_LED
 #define HAL_LED TRUE
@@ -400,64 +380,16 @@ st( \
 #define BLINK_LEDS
 #endif
 
-/* Set to TRUE enable KEY usage, FALSE disable it */
-#ifndef HAL_KEY
-#define HAL_KEY TRUE
-#endif
-
-/* Set to TRUE enable UART usage, FALSE disable it */
-#ifndef HAL_UART
-#if (defined ZAPP_P1) || (defined ZAPP_P2) || (defined ZTOOL_P1) || (defined ZTOOL_P2)
-#define HAL_UART TRUE
-#else
 #define HAL_UART FALSE
-#endif
-#endif
 
-#if HAL_UART
-// Always prefer to use DMA over ISR.
-#if HAL_DMA
-  #ifndef HAL_UART_DMA
-    #if (defined ZAPP_P1) || (defined ZTOOL_P1)
-      #define HAL_UART_DMA  1
-    #elif (defined ZAPP_P2) || (defined ZTOOL_P2)
-      #define HAL_UART_DMA  2
-    #else
-      #define HAL_UART_DMA  1
-    #endif
-  #endif
-  #ifndef HAL_UART_ISR
-    #define HAL_UART_ISR  0
-  #endif
-#else
-  #ifndef HAL_UART_ISR
-    #if (defined ZAPP_P1) || (defined ZTOOL_P1)
-      #define HAL_UART_ISR  1
-    #elif (defined ZAPP_P2) || (defined ZTOOL_P2)
-      #define HAL_UART_ISR  2
-    #else
-      #define HAL_UART_ISR  1
-    #endif
-  #endif
-  #ifndef HAL_UART_DMA
-    #define HAL_UART_DMA  0
-  #endif
-#endif
+#define HAL_UART_DMA  0
+#define HAL_UART_ISR  0
 
 // Used to set P2 priority - USART0 over USART1 if both are defined.
 #if ((HAL_UART_DMA == 1) || (HAL_UART_ISR == 1))
 #define HAL_UART_PRIPO             0x00
 #else
 #define HAL_UART_PRIPO             0x40
-#endif
-
-#else
-#define HAL_UART_DMA  0
-#define HAL_UART_ISR  0
-#endif
-
-#if !defined HAL_UART_SPI
-#define HAL_UART_SPI  0
 #endif
 
 #ifdef __cplusplus
