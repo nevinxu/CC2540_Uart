@@ -380,9 +380,9 @@ st( \
 #define BLINK_LEDS
 #endif
 
-#define HAL_UART FALSE
+#define HAL_UART TRUE
 
-#define HAL_UART_DMA  0
+#define HAL_UART_DMA  2
 #define HAL_UART_ISR  0
 
 // Used to set P2 priority - USART0 over USART1 if both are defined.

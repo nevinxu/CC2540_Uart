@@ -61,7 +61,7 @@
  * CONSTANTS
  */
 
-#define SERVAPP_NUM_ATTR_SUPPORTED        17
+#define SERVAPP_NUM_ATTR_SUPPORTED        18
 
 /*********************************************************************
  * TYPEDEFS
@@ -129,10 +129,12 @@ static CONST gattAttrType_t simpleProfileService = { ATT_BT_UUID_SIZE, simplePro
 
 
 // Simple Profile Characteristic 1 Properties
-static uint8 simpleProfileChar1Props = GATT_PROP_READ | GATT_PROP_WRITE;
+static uint8 simpleProfileChar1Props = GATT_PROP_READ | GATT_PROP_WRITE |GATT_PROP_NOTIFY;
 
 // Characteristic 1 Value
-static uint8 simpleProfileChar1 = 0;
+static uint8 simpleProfileChar1[SIMPLEPROFILE_CHAR1_LEN];
+
+static gattCharCfg_t *simpleProfileChar1Config;
 
 // Simple Profile Characteristic 1 User Description
 static uint8 simpleProfileChar1UserDesp[17] = "Characteristic 1";
@@ -210,9 +212,17 @@ static gattAttribute_t simpleProfileAttrTbl[SERVAPP_NUM_ATTR_SUPPORTED] =
         { ATT_BT_UUID_SIZE, simpleProfilechar1UUID },
         GATT_PERMIT_READ | GATT_PERMIT_WRITE, 
         0, 
-        &simpleProfileChar1 
+        simpleProfileChar1 
       },
 
+      // Characteristic 1 configuration
+      { 
+        { ATT_BT_UUID_SIZE, clientCharCfgUUID },
+        GATT_PERMIT_READ | GATT_PERMIT_WRITE, 
+        0, 
+        (uint8 *)&simpleProfileChar1Config 
+      },
+      
       // Characteristic 1 User Description
       { 
         { ATT_BT_UUID_SIZE, charUserDescUUID },
@@ -367,6 +377,14 @@ bStatus_t SimpleProfile_AddService( uint32 services )
   uint8 status;
   
   // Allocate Client Characteristic Configuration table
+  simpleProfileChar1Config = (gattCharCfg_t *)osal_mem_alloc( sizeof(gattCharCfg_t) *
+                                                              linkDBNumConns );
+  if ( simpleProfileChar1Config == NULL )
+  {     
+    return ( bleMemAllocError );
+  }
+  
+  // Allocate Client Characteristic Configuration table
   simpleProfileChar4Config = (gattCharCfg_t *)osal_mem_alloc( sizeof(gattCharCfg_t) *
                                                               linkDBNumConns );
   if ( simpleProfileChar4Config == NULL )
@@ -374,6 +392,7 @@ bStatus_t SimpleProfile_AddService( uint32 services )
     return ( bleMemAllocError );
   }
   
+  GATTServApp_InitCharCfg( INVALID_CONNHANDLE, simpleProfileChar1Config );
   // Initialize Client Characteristic Configuration attributes
   GATTServApp_InitCharCfg( INVALID_CONNHANDLE, simpleProfileChar4Config );
   
@@ -437,9 +456,15 @@ bStatus_t SimpleProfile_SetParameter( uint8 param, uint8 len, void *value )
   switch ( param )
   {
     case SIMPLEPROFILE_CHAR1:
-      if ( len == sizeof ( uint8 ) ) 
+      if ( len <= SIMPLEPROFILE_CHAR1_LEN ) 
+  
       {
-        simpleProfileChar1 = *((uint8*)value);
+        VOID memcpy( simpleProfileChar1, value, len );
+        
+        // See if Notification has been enabled
+        GATTServApp_ProcessCharCfg( simpleProfileChar1Config, simpleProfileChar1, FALSE,
+                                    simpleProfileAttrTbl, GATT_NUM_ATTRS( simpleProfileAttrTbl ),
+                                    INVALID_TASK_ID, simpleProfile_ReadAttrCB );
       }
       else
       {
@@ -523,7 +548,7 @@ bStatus_t SimpleProfile_GetParameter( uint8 param, void *value )
   switch ( param )
   {
     case SIMPLEPROFILE_CHAR1:
-      *((uint8*)value) = simpleProfileChar1;
+      VOID memcpy( value, simpleProfileChar1, SIMPLEPROFILE_CHAR1_LEN );
       break;
 
     case SIMPLEPROFILE_CHAR2:
@@ -539,6 +564,7 @@ bStatus_t SimpleProfile_GetParameter( uint8 param, void *value )
       break;
 
     case SIMPLEPROFILE_CHAR5:
+      
       VOID memcpy( value, simpleProfileChar5, SIMPLEPROFILE_CHAR5_LEN );
       break;      
       
@@ -599,6 +625,10 @@ static bStatus_t simpleProfile_ReadAttrCB( uint16 connHandle, gattAttribute_t *p
       // characteristic 4 does not have read permissions, but because it
       //   can be sent as a notification, it is included here
       case SIMPLEPROFILE_CHAR1_UUID:
+        *pLen = SIMPLEPROFILE_CHAR1_LEN;
+        VOID memcpy( pValue, pAttr->pValue, SIMPLEPROFILE_CHAR1_LEN );
+        break;
+        
       case SIMPLEPROFILE_CHAR2_UUID:
       case SIMPLEPROFILE_CHAR4_UUID:
         *pLen = 1;
@@ -668,7 +698,7 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
         // Make sure it's not a blob oper
         if ( offset == 0 )
         {
-          if ( len != 1 )
+          if ( len < 1 )
           {
             status = ATT_ERR_INVALID_VALUE_SIZE;
           }
@@ -684,7 +714,7 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
           uint8 *pCurValue = (uint8 *)pAttr->pValue;        
           *pCurValue = pValue[0];
 
-          if( pAttr->pValue == &simpleProfileChar1 )
+          if( pAttr->pValue == simpleProfileChar1 )
           {
             notifyApp = SIMPLEPROFILE_CHAR1;        
           }

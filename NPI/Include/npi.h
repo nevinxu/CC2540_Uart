@@ -64,25 +64,7 @@ extern "C"
  * CONSTANTS
  */
 
-/* UART port */
-#if !defined NPI_UART_PORT
-
-#if ((defined HAL_UART_SPI) && (HAL_UART_SPI != 0)) // FOR SPI
-#if (HAL_UART_SPI == 2)  
 #define NPI_UART_PORT                  HAL_UART_PORT_1
-#else
-#define NPI_UART_PORT                  HAL_UART_PORT_0
-#endif
-#else // FOR UART
-#if ((defined HAL_UART_DMA) && (HAL_UART_DMA  == 1))
-#define NPI_UART_PORT                  HAL_UART_PORT_0
-#elif ((defined HAL_UART_DMA) && (HAL_UART_DMA  == 2))
-#define NPI_UART_PORT                  HAL_UART_PORT_1
-#else
-#define NPI_UART_PORT                  HAL_UART_PORT_0
-#endif
-#endif // Endif for HAL_UART_SPI/DMA 
-#endif //Endif for NPI_UART_PORT
 
 #if !defined( NPI_UART_FC )
 #define NPI_UART_FC                    TRUE

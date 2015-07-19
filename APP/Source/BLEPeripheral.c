@@ -35,7 +35,7 @@
  */
 
 // How often to perform periodic event
-#define SBP_PERIODIC_EVT_PERIOD                   5000
+#define SBP_PERIODIC_EVT_PERIOD                   10
 
 // What is the advertising interval when device is discoverable (units of 625us, 160=100ms)
 #define DEFAULT_ADVERTISING_INTERVAL          160
@@ -50,10 +50,10 @@
 #endif  // defined ( CC2540_MINIDK )
 
 // Minimum connection interval (units of 1.25ms, 80=100ms) if automatic parameter update request is enabled
-#define DEFAULT_DESIRED_MIN_CONN_INTERVAL     80
+#define DEFAULT_DESIRED_MIN_CONN_INTERVAL     8
 
 // Maximum connection interval (units of 1.25ms, 800=1000ms) if automatic parameter update request is enabled
-#define DEFAULT_DESIRED_MAX_CONN_INTERVAL     800
+#define DEFAULT_DESIRED_MAX_CONN_INTERVAL     10
 
 // Slave latency to use if automatic parameter update request is enabled
 #define DEFAULT_DESIRED_SLAVE_LATENCY         0
@@ -96,7 +96,7 @@
  */
 static uint8 BLEPeripheral_TaskID;   // Task ID for internal task/event processing
 
-static gaprole_States_t gapProfileState = GAPROLE_INIT;
+gaprole_States_t gapProfileState = GAPROLE_INIT;
 
 // GAP - SCAN RSP data (max size = 31 bytes)
 static uint8 scanRspData[] =
@@ -157,6 +157,10 @@ static uint8 advertData[] =
   HI_UINT16( SIMPLEPROFILE_SERV_UUID ),
 
 };
+
+
+extern uint8 rxbuffer[256];
+extern uint16 rxbuffersize;
 
 // GAP GATT Attributes
 static uint8 attDeviceName[GAP_DEVICE_NAME_LEN] = "Simple BLE Peripheral";
@@ -395,6 +399,50 @@ uint16 BLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
     // Restart timer
     if ( SBP_PERIODIC_EVT_PERIOD )
     {
+      if(gapProfileState == GAPROLE_CONNECTED)
+      {
+        if(rxbuffersize > 0)
+        {
+          if(rxbuffersize >=19)
+          {
+            SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, 19, rxbuffer );
+            rxbuffersize -=19;
+            if(rxbuffersize >= 19)
+            {
+              SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, 19, &rxbuffer[19] );
+              rxbuffersize -=19;
+              if(rxbuffersize > 0)
+              {
+                SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, rxbuffersize, &rxbuffer[38] );
+                rxbuffersize = 0;
+              }
+              else
+              {
+                rxbuffersize = 0;
+              }
+            }
+            else if(rxbuffersize > 0)
+            {
+              SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, rxbuffersize, &rxbuffer[19] );
+              rxbuffersize = 0;
+            }
+            else
+            {
+              rxbuffersize = 0;
+            }
+          }
+          else if(rxbuffersize > 0)
+          {
+            SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, rxbuffersize, &rxbuffer );
+            rxbuffersize = 0;
+          }
+          else
+          {
+            rxbuffersize = 0;
+          }
+        }
+        
+      }
       osal_start_timerEx( BLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
     }
 
